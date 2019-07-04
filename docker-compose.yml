@@ -1,0 +1,26 @@
+version: "3"
+services:
+  master:
+    container_name: master
+    hostname: master
+    image: "androzo/locust:1.0"
+    environment:
+      ATTACKED_HOST: http://example.com
+      LOCUST_MODE: master
+      LOCUST_MASTER_BIND_PORT: 5557
+      TASK_DELAY: 100
+      QUIET_MODE: "${QUIET_MODE:-false}"
+      LOCUST_OPTS: "--no-web --expect-slaves 4 -c 1 -r 1 -t 10s"
+  slave:
+    image: "androzo/locust:1.0"
+    environment:
+      ATTACKED_HOST: http://example.com
+      LOCUST_MODE: slave
+      LOCUST_MASTER: master
+      LOCUST_MASTER_BIND_PORT: 5557
+      NO_PROXY: master
+      TASK_DELAY: 100
+      QUIET_MODE: "${QUIET_MODE:-false}"
+      LOCUST_OPTS: "--no-web"
+    deploy:
+      replicas: 4
