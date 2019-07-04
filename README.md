@@ -19,6 +19,22 @@ docker-compose scale master=1 slave=4
 docker-compose ps
 
 #logs
+
 docker-compose logs --follow
 
 docker container prune -f
+
+# Minikube
+
+minikube start --vm-driver hyperv
+
+# Kompose
+
+kompose up
+kompose down
+
+# Kubernetes useful cmdlets
+
+kubectl get all
+kubectl logs <pod>
+kubectl describe <pod>

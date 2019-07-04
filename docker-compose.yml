@@ -3,6 +3,10 @@ services:
   master:
     container_name: master
     hostname: master
+    ports:
+      - "8089:8089"
+      - "5557:5557"
+      - "5558:5558"
     image: "androzo/locust:1.0"
     environment:
       ATTACKED_HOST: http://example.com
@@ -10,7 +14,7 @@ services:
       LOCUST_MASTER_BIND_PORT: 5557
       TASK_DELAY: 100
       QUIET_MODE: "${QUIET_MODE:-false}"
-      LOCUST_OPTS: "--no-web --expect-slaves 4 -c 1 -r 1 -t 10s"
+      LOCUST_OPTS: "--no-web --expect-slaves 4 -c 100 -r 1 -t 60s"
   slave:
     image: "androzo/locust:1.0"
     environment:
